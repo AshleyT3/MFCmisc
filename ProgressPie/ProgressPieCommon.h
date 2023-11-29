@@ -18,10 +18,19 @@ class CProgressPieCommon
 {
 public:
    CProgressPieCommon(CWnd* pwndCtl);
+
    void SetPercent(double percent);
    double GetPercent() const { return 100.0 * m_curRatio; }
-   void SetPieColor(COLORREF clr);
-   void SetOutlineColor(COLORREF clr);
+
+   void SetPieColor(COLORREF clr) { m_clrPie  = clr; }
+   COLORREF GetPieColor() const { return m_clrPie;  }
+
+   void SetOutlineColor(COLORREF clr) { m_clrOutline = clr; }
+   COLORREF GetOutlineColor() const { return m_clrOutline; }
+
+   void SetFullCircleOutline(bool bFullCircleOutline) { m_bFullOutline = bFullCircleOutline; }
+   bool GetFullCircleOutline() const { return m_bFullOutline; }
+
    int GetSize();
    void PaintToDC(CDC& dc_compat);
    void PaintToBitmap(CDC& dc, CBitmap& bitmap);
@@ -31,5 +40,6 @@ protected:
    COLORREF m_clrOutline;
    double m_curRatio;
    CWnd* m_pwndCtl;
+   bool m_bFullOutline;
 };
 

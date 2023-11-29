@@ -18,8 +18,8 @@
 IMPLEMENT_DYNAMIC(CProgressPieStaticCtrl, CStatic)
 
 CProgressPieStaticCtrl::CProgressPieStaticCtrl()
-	:
-	m_common(this)
+    :
+    m_common(this)
 {
 }
 
@@ -28,26 +28,16 @@ CProgressPieStaticCtrl::~CProgressPieStaticCtrl()
 }
 
 BEGIN_MESSAGE_MAP(CProgressPieStaticCtrl, CStatic)
-	ON_WM_PAINT()
+    ON_WM_PAINT()
 END_MESSAGE_MAP()
 
 void CProgressPieStaticCtrl::OnPaint()
 {
-	m_common.OnPaint();
+    m_common.OnPaint();
 }
 
 void CProgressPieStaticCtrl::SetPercent(double percent)
 {
-	m_common.SetPercent(percent);
-	Invalidate(FALSE);
-}
-
-void CProgressPieStaticCtrl::SetPieColor(COLORREF clr)
-{
-	m_common.SetPieColor(clr);
-}
-
-void CProgressPieStaticCtrl::SetOutlineColor(COLORREF clr)
-{
-	m_common.SetOutlineColor(clr);
+    m_common.SetPercent(percent);
+    Invalidate(FALSE);
 }

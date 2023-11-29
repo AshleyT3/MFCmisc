@@ -18,18 +18,27 @@
 
 class CProgressPieStaticCtrl : public CStatic
 {
-	DECLARE_DYNAMIC(CProgressPieStaticCtrl)
+    DECLARE_DYNAMIC(CProgressPieStaticCtrl)
 public:
-	CProgressPieStaticCtrl();
-	virtual ~CProgressPieStaticCtrl();
-	void SetPercent(double percent);
-	double GetPercent() const { return m_common.GetPercent(); }
-	void SetPieColor(COLORREF clr);
-	void SetOutlineColor(COLORREF clr);
+    CProgressPieStaticCtrl();
+    virtual ~CProgressPieStaticCtrl();
+
+    void SetPercent(double percent);
+    double GetPercent() const { return m_common.GetPercent(); }
+
+    void SetPieColor(COLORREF clr) { m_common.SetPieColor(clr); }
+    COLORREF GetPieColor() const { return m_common.GetPieColor(); }
+
+    void SetOutlineColor(COLORREF clr) { m_common.SetOutlineColor(clr); }
+    COLORREF GetOutlineColor() const { return m_common.GetOutlineColor(); }
+
+    void SetFullCircleOutline(bool bFullCircleOutline) { m_common.SetFullCircleOutline(bFullCircleOutline); }
+    bool GetFullCircleOutline() const { return m_common.GetFullCircleOutline(); }
+
 protected:
-	DECLARE_MESSAGE_MAP()
+    DECLARE_MESSAGE_MAP()
 public:
-	afx_msg void OnPaint();
+    afx_msg void OnPaint();
 protected:
-	CProgressPieCommon m_common;
+    CProgressPieCommon m_common;
 };

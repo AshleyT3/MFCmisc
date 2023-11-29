@@ -12,30 +12,32 @@ class CMFCmiscDlg : public CDialogEx
 {
 // Construction
 public:
-	CMFCmiscDlg(CWnd* pParent = nullptr);	// standard constructor
+    CMFCmiscDlg(CWnd* pParent = nullptr);	// standard constructor
 
 // Dialog Data
 #ifdef AFX_DESIGN_TIME
-	enum { IDD = IDD_MFCMISC_DIALOG };
+    enum { IDD = IDD_MFCMISC_DIALOG };
 #endif
 
-	protected:
-	virtual void DoDataExchange(CDataExchange* pDX);	// DDX/DDV support
+    protected:
+    virtual void DoDataExchange(CDataExchange* pDX);	// DDX/DDV support
 
 
 // Implementation
 protected:
-	HICON m_hIcon;
+    HICON m_hIcon;
 
-	// Generated message map functions
-	virtual BOOL OnInitDialog();
-	afx_msg void OnSysCommand(UINT nID, LPARAM lParam);
-	afx_msg void OnPaint();
-	afx_msg HCURSOR OnQueryDragIcon();
-	DECLARE_MESSAGE_MAP()
+    // Generated message map functions
+    virtual BOOL OnInitDialog();
+    afx_msg void OnSysCommand(UINT nID, LPARAM lParam);
+    afx_msg void OnPaint();
+    afx_msg HCURSOR OnQueryDragIcon();
+    DECLARE_MESSAGE_MAP()
 public:
-	CProgressPieCtrl m_btnProgressPie;
-	CProgressPieStaticCtrl m_staticProgressPie;
-	afx_msg void OnTimer(UINT_PTR nIDEvent);
-	afx_msg void OnClickedButtonProgerssPie();
+    CProgressPieCtrl m_btnProgressPie;
+    CProgressPieStaticCtrl m_staticProgressPie;
+    afx_msg void OnTimer(UINT_PTR nIDEvent);
+    afx_msg void OnClickedButtonProgerssPie();
+    afx_msg void OnClickedCheckFulloutline();
+    CButton m_checkFullCircleOutline;
 };

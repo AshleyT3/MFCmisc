@@ -18,26 +18,33 @@
 
 class CProgressPieCtrl : public CButton
 {
-	DECLARE_DYNAMIC(CProgressPieCtrl)
+    DECLARE_DYNAMIC(CProgressPieCtrl)
 
 public:
-	CProgressPieCtrl();
-	virtual ~CProgressPieCtrl();
+    CProgressPieCtrl();
+    virtual ~CProgressPieCtrl();
 protected:
-	DECLARE_MESSAGE_MAP()
+    DECLARE_MESSAGE_MAP()
 public:
-	void SetPercent(double percent);
-	double GetPercent() const { return m_common.GetPercent(); }
-	void SetPieColor(COLORREF clr);
-	void SetOutlineColor(COLORREF clr);
+    void SetPercent(double percent);
+    double GetPercent() const { return m_common.GetPercent(); }
+
+    void SetPieColor(COLORREF clr) { m_common.SetPieColor(clr); }
+    COLORREF GetPieColor() const { return m_common.GetPieColor(); }
+
+    void SetOutlineColor(COLORREF clr) { m_common.SetOutlineColor(clr); }
+    COLORREF GetOutlineColor() const { return m_common.GetOutlineColor(); }
+
+    void SetFullCircleOutline(bool bFullCircleOutline) { m_common.SetFullCircleOutline(bFullCircleOutline); }
+    bool GetFullCircleOutline() const { return m_common.GetFullCircleOutline(); }
 protected:
-	CProgressPieCommon m_common;
-	CBitmap m_lastBitmap;
-	COLORREF m_clrBackground;
-	CBrush m_backgroundBrush;
-	COLORREF m_clrText;
+    CProgressPieCommon m_common;
+    CBitmap m_lastBitmap;
+    COLORREF m_clrBackground;
+    CBrush m_backgroundBrush;
+    COLORREF m_clrText;
 public:
-	afx_msg HBRUSH CtlColor(CDC* /*pDC*/, UINT /*nCtlColor*/);
+    afx_msg HBRUSH CtlColor(CDC* /*pDC*/, UINT /*nCtlColor*/);
 };
 
 

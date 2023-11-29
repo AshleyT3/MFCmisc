@@ -18,11 +18,11 @@
 IMPLEMENT_DYNAMIC(CProgressPieCtrl, CButton)
 
 CProgressPieCtrl::CProgressPieCtrl()
-	:
-	m_common(this),
-	m_clrBackground(::GetSysColor(COLOR_3DFACE)),
-	m_backgroundBrush(m_clrBackground),
-	m_clrText(RGB(0, 0, 0))
+    :
+    m_common(this),
+    m_clrBackground(::GetSysColor(COLOR_3DFACE)),
+    m_backgroundBrush(m_clrBackground),
+    m_clrText(RGB(0, 0, 0))
 {
 }
 
@@ -31,38 +31,28 @@ CProgressPieCtrl::~CProgressPieCtrl()
 }
 
 BEGIN_MESSAGE_MAP(CProgressPieCtrl, CButton)
-	ON_WM_CTLCOLOR_REFLECT()
+    ON_WM_CTLCOLOR_REFLECT()
 END_MESSAGE_MAP()
 
 void CProgressPieCtrl::SetPercent(double percent)
 {
-	m_common.SetPercent(percent);
+    m_common.SetPercent(percent);
 
-	CDC* pDC = GetDC();
-	CBitmap newBitmap;
-	m_common.PaintToBitmap(*pDC, newBitmap);
-	ReleaseDC(pDC);
+    CDC* pDC = GetDC();
+    CBitmap newBitmap;
+    m_common.PaintToBitmap(*pDC, newBitmap);
+    ReleaseDC(pDC);
 
-	SetBitmap(newBitmap);
-	m_lastBitmap.DeleteObject();
-	m_lastBitmap.Attach(newBitmap.Detach());
+    SetBitmap(newBitmap);
+    m_lastBitmap.DeleteObject();
+    m_lastBitmap.Attach(newBitmap.Detach());
 
-	Invalidate(FALSE);
-}
-
-void CProgressPieCtrl::SetPieColor(COLORREF clr)
-{
-	m_common.SetPieColor(clr);
-}
-
-void CProgressPieCtrl::SetOutlineColor(COLORREF clr)
-{
-	m_common.SetOutlineColor(clr);
+    Invalidate(FALSE);
 }
 
 HBRUSH CProgressPieCtrl::CtlColor(CDC* pDC, UINT /*nCtlColor*/)
 {
-	pDC->SetTextColor(m_clrText);
-	pDC->SetBkColor(m_clrBackground);
-	return m_backgroundBrush;
+    pDC->SetTextColor(m_clrText);
+    pDC->SetBkColor(m_clrBackground);
+    return m_backgroundBrush;
 }
