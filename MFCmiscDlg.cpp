@@ -25,6 +25,7 @@
 #define new DEBUG_NEW
 #endif
 
+#define WM_MFCMISC_DEMO_INVOKE_ON_GUI_THREAD (WM_USER + 0x100)
 
 // CAboutDlg dialog used for App About
 
@@ -58,13 +59,12 @@ void CAboutDlg::DoDataExchange(CDataExchange* pDX)
 BEGIN_MESSAGE_MAP(CAboutDlg, CDialogEx)
 END_MESSAGE_MAP()
 
-
 // CMFCmiscDlg dialog
 
-
-
 CMFCmiscDlg::CMFCmiscDlg(CWnd* pParent /*=nullptr*/)
-    : CDialogEx(IDD_MFCMISC_DIALOG, pParent)
+    :
+    CDialogEx(IDD_MFCMISC_DIALOG, pParent),
+    CInvokeGuiThreadSupport(WM_MFCMISC_DEMO_INVOKE_ON_GUI_THREAD)
 {
     m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
 }
@@ -75,6 +75,7 @@ void CMFCmiscDlg::DoDataExchange(CDataExchange* pDX)
     DDX_Control(pDX, IDC_BUTTON_PROGERSS_PIE, m_btnProgressPie);
     DDX_Control(pDX, IDC_STATIC_PROGRESS_PIE, m_staticProgressPie);
     DDX_Control(pDX, IDC_CHECK_FULLOUTLINE, m_checkFullCircleOutline);
+    DDX_Control(pDX, IDC_STATIC_WORKTHREADMESSAGE, m_staticWorkerThreadMessage);
 }
 
 BEGIN_MESSAGE_MAP(CMFCmiscDlg, CDialogEx)
@@ -84,6 +85,8 @@ BEGIN_MESSAGE_MAP(CMFCmiscDlg, CDialogEx)
     ON_WM_TIMER()
     ON_BN_CLICKED(IDC_BUTTON_PROGERSS_PIE, &CMFCmiscDlg::OnClickedButtonProgerssPie)
     ON_BN_CLICKED(IDC_CHECK_FULLOUTLINE, &CMFCmiscDlg::OnClickedCheckFulloutline)
+    ON_BN_CLICKED(IDC_BUTTON_RUNWORKERTHREAD, &CMFCmiscDlg::OnClickedButtonRunworkerthread)
+    ON_MESSAGE(WM_MFCMISC_DEMO_INVOKE_ON_GUI_THREAD, OnInvokeOnGuiThread)
 END_MESSAGE_MAP()
 
 
@@ -92,6 +95,8 @@ END_MESSAGE_MAP()
 BOOL CMFCmiscDlg::OnInitDialog()
 {
     CDialogEx::OnInitDialog();
+
+    SetGuiThreadId();
 
     // Add "About..." menu item to system menu.
 
@@ -211,4 +216,33 @@ void CMFCmiscDlg::OnClickedCheckFulloutline()
     bool bFulLOutline = m_checkFullCircleOutline.GetCheck() == BST_CHECKED;
     m_staticProgressPie.SetFullCircleOutline(bFulLOutline);
     m_btnProgressPie.SetFullCircleOutline(bFulLOutline);
+}
+
+void SomeWorker(CMFCmiscDlg* pWnd)
+{
+    ::Sleep(3000);
+    CString csMessage;
+    csMessage.Format(L"Hello from worker thread having TID=%lu!\n", ::GetCurrentThreadId());
+    pWnd->InvokeOnGuidThread(pWnd->m_hWnd, [&]() {
+        pWnd->AssertValid();
+        pWnd->m_staticWorkerThreadMessage.SetWindowText(csMessage);
+        return 0; // LRESULT
+    });
+    ::Sleep(3000);
+    pWnd->InvokeOnGuidThread(pWnd->m_hWnd, [&]() {
+        pWnd->AssertValid();
+        pWnd->m_staticWorkerThreadMessage.SetWindowText(L"Worker thread finished.");
+        return 0; // LRESULT
+    });
+}
+
+void CMFCmiscDlg::OnClickedButtonRunworkerthread()
+{
+    m_staticWorkerThreadMessage.SetWindowText(L"Worker thread running, waiting for a message...");
+    std::thread(SomeWorker, this).detach();
+}
+
+LRESULT CMFCmiscDlg::OnInvokeOnGuiThread(WPARAM wParam, LPARAM)
+{
+   return OnHandleInvokeMessage(wParam);
 }

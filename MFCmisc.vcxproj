@@ -192,6 +192,7 @@
     <ClInclude Include="ProgressPie\ProgressPieStaticCtrl.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="targetver.h" />
+    <ClInclude Include="WindowsMisc\InvokeGuiThreadSupport.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MFCmisc.cpp" />

@@ -6,9 +6,10 @@
 
 #include "ProgressPie/ProgressPieStaticCtrl.h"
 #include "ProgressPie/ProgressPieCtrl.h"
+#include "WindowsMisc/InvokeGuiThreadSupport.h"
 
 // CMFCmiscDlg dialog
-class CMFCmiscDlg : public CDialogEx
+class CMFCmiscDlg : public CDialogEx, public CInvokeGuiThreadSupport
 {
 // Construction
 public:
@@ -31,13 +32,16 @@ protected:
     virtual BOOL OnInitDialog();
     afx_msg void OnSysCommand(UINT nID, LPARAM lParam);
     afx_msg void OnPaint();
+    afx_msg void OnTimer(UINT_PTR nIDEvent);
     afx_msg HCURSOR OnQueryDragIcon();
+    afx_msg void OnClickedButtonProgerssPie();
+    afx_msg void OnClickedCheckFulloutline();
+    afx_msg void OnClickedButtonRunworkerthread();
+    afx_msg LRESULT OnInvokeOnGuiThread(WPARAM, LPARAM);
     DECLARE_MESSAGE_MAP()
 public:
     CProgressPieCtrl m_btnProgressPie;
     CProgressPieStaticCtrl m_staticProgressPie;
-    afx_msg void OnTimer(UINT_PTR nIDEvent);
-    afx_msg void OnClickedButtonProgerssPie();
-    afx_msg void OnClickedCheckFulloutline();
     CButton m_checkFullCircleOutline;
+    CStatic m_staticWorkerThreadMessage;
 };

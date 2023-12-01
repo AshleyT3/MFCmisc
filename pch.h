@@ -10,6 +10,7 @@
 #define NOMINMAX
 #include <algorithm>
 #include <chrono>
+#include <thread>
 
 #include "framework.h"
 
