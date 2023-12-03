@@ -223,13 +223,13 @@ void SomeWorker(CMFCmiscDlg* pWnd)
     ::Sleep(3000);
     CString csMessage;
     csMessage.Format(L"Hello from worker thread having TID=%lu!\n", ::GetCurrentThreadId());
-    pWnd->InvokeOnGuidThread(pWnd->m_hWnd, [&]() {
+    pWnd->InvokeOnGuiThread(pWnd->m_hWnd, [&]() {
         pWnd->AssertValid();
         pWnd->m_staticWorkerThreadMessage.SetWindowText(csMessage);
         return 0; // LRESULT
     });
     ::Sleep(3000);
-    pWnd->InvokeOnGuidThread(pWnd->m_hWnd, [&]() {
+    pWnd->InvokeOnGuiThread(pWnd->m_hWnd, [&]() {
         pWnd->AssertValid();
         pWnd->m_staticWorkerThreadMessage.SetWindowText(L"Worker thread finished.");
         return 0; // LRESULT
